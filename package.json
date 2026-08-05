@@ -1,18 +1,19 @@
 {
   "name": "sistema-nacional-informacion-crediticia",
   "version": "1.0.0",
-  "description": "API REST para consultar el historial crediticio de ciudadanos",
+  "description": "Servicios REST y SOAP para consultar el historial crediticio de ciudadanos",
   "type": "module",
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "docker": "docker compose up --build",
+    "soap:client": "node scripts/soap-client.js",
     "test": "node --test",
     "check": "node --check src/server.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -22,6 +23,7 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3",
+    "soap": "^1.10.0",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {

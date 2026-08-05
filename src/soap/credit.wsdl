@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+  xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:tns="http://localhost:3000/soap/creditos"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://localhost:3000/soap/creditos"
+  name="CreditoService">
+
+  <types>
+    <xsd:schema targetNamespace="http://localhost:3000/soap/creditos" elementFormDefault="qualified">
+      <xsd:complexType name="ConsultaType">
+        <xsd:sequence>
+          <xsd:element name="apiToken" type="xsd:string"/>
+          <xsd:element name="identificacion" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:element name="ConsultarHistorialRequest" type="tns:ConsultaType"/>
+      <xsd:element name="ConsultarScoreRequest" type="tns:ConsultaType"/>
+      <xsd:element name="ConsultarEndeudamientoRequest" type="tns:ConsultaType"/>
+
+      <xsd:element name="ConsultarHistorialResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="identificacion" type="xsd:string"/>
+            <xsd:element name="poseeHistorial" type="xsd:boolean"/>
+            <xsd:element name="scoreCrediticio" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="prestamosActivos" type="xsd:int"/>
+            <xsd:element name="tarjetasCredito" type="xsd:int"/>
+            <xsd:element name="porcentajeEndeudamiento" type="xsd:decimal" minOccurs="0"/>
+            <xsd:element name="nivelEndeudamiento" type="xsd:string"/>
+            <xsd:element name="poseeMoraActual" type="xsd:boolean"/>
+            <xsd:element name="estadoGeneral" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="ConsultarScoreResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="identificacion" type="xsd:string"/>
+            <xsd:element name="poseeHistorial" type="xsd:boolean"/>
+            <xsd:element name="scoreCrediticio" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="estadoGeneral" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="ConsultarEndeudamientoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="identificacion" type="xsd:string"/>
+            <xsd:element name="prestamosActivos" type="xsd:int"/>
+            <xsd:element name="tarjetasCredito" type="xsd:int"/>
+            <xsd:element name="porcentajeEndeudamiento" type="xsd:decimal" minOccurs="0"/>
+            <xsd:element name="nivelEndeudamiento" type="xsd:string"/>
+            <xsd:element name="poseeMoraActual" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="ConsultarHistorialInput">
+    <part name="parameters" element="tns:ConsultarHistorialRequest"/>
+  </message>
+  <message name="ConsultarHistorialOutput">
+    <part name="parameters" element="tns:ConsultarHistorialResponse"/>
+  </message>
+  <message name="ConsultarScoreInput">
+    <part name="parameters" element="tns:ConsultarScoreRequest"/>
+  </message>
+  <message name="ConsultarScoreOutput">
+    <part name="parameters" element="tns:ConsultarScoreResponse"/>
+  </message>
+  <message name="ConsultarEndeudamientoInput">
+    <part name="parameters" element="tns:ConsultarEndeudamientoRequest"/>
+  </message>
+  <message name="ConsultarEndeudamientoOutput">
+    <part name="parameters" element="tns:ConsultarEndeudamientoResponse"/>
+  </message>
+
+  <portType name="CreditoPortType">
+    <operation name="ConsultarHistorial">
+      <documentation>Consulta todos los indicadores crediticios de un ciudadano.</documentation>
+      <input message="tns:ConsultarHistorialInput"/>
+      <output message="tns:ConsultarHistorialOutput"/>
+    </operation>
+    <operation name="ConsultarScore">
+      <documentation>Consulta la puntuacion y clasificacion crediticia.</documentation>
+      <input message="tns:ConsultarScoreInput"/>
+      <output message="tns:ConsultarScoreOutput"/>
+    </operation>
+    <operation name="ConsultarEndeudamiento">
+      <documentation>Consulta prestamos, tarjetas y nivel de endeudamiento.</documentation>
+      <input message="tns:ConsultarEndeudamientoInput"/>
+      <output message="tns:ConsultarEndeudamientoOutput"/>
+    </operation>
+  </portType>
+
+  <binding name="CreditoBinding" type="tns:CreditoPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="ConsultarHistorial">
+      <soap:operation soapAction="http://localhost:3000/soap/creditos/ConsultarHistorial"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="ConsultarScore">
+      <soap:operation soapAction="http://localhost:3000/soap/creditos/ConsultarScore"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="ConsultarEndeudamiento">
+      <soap:operation soapAction="http://localhost:3000/soap/creditos/ConsultarEndeudamiento"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <service name="CreditoService">
+    <documentation>Servicio SOAP del Sistema Nacional de Informacion Crediticia.</documentation>
+    <port name="CreditoPort" binding="tns:CreditoBinding">
+      <soap:address location="http://localhost:3000/soap/creditos"/>
+    </port>
+  </service>
+</definitions>

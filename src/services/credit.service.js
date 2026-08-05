@@ -28,3 +28,23 @@ export async function getCreditHistory(identification, queryContext) {
     estadoGeneral: hasHistory ? profile.estado_general : 'Sin historial',
   };
 }
+
+export function selectScore(history) {
+  return {
+    identificacion: history.identificacion,
+    poseeHistorial: history.poseeHistorial,
+    scoreCrediticio: history.scoreCrediticio,
+    estadoGeneral: history.estadoGeneral,
+  };
+}
+
+export function selectDebt(history) {
+  return {
+    identificacion: history.identificacion,
+    prestamosActivos: history.prestamosActivos,
+    tarjetasCredito: history.tarjetasCredito,
+    porcentajeEndeudamiento: history.porcentajeEndeudamiento,
+    nivelEndeudamiento: history.nivelEndeudamiento,
+    poseeMoraActual: history.poseeMoraActual,
+  };
+}

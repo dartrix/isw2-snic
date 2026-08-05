@@ -1,4 +1,4 @@
-import { getCreditHistory } from '../services/credit.service.js';
+import { getCreditHistory, selectDebt, selectScore } from '../services/credit.service.js';
 import { getResponseFormat, sendFormatted } from '../utils/response.js';
 
 function getQueryContext(req, endpoint) {
@@ -21,24 +21,12 @@ export async function historyController(req, res) {
 
 export async function scoreController(req, res) {
   const history = await getCreditHistory(req.params.identificacion, getQueryContext(req, 'score'));
-  const data = {
-    identificacion: history.identificacion,
-    poseeHistorial: history.poseeHistorial,
-    scoreCrediticio: history.scoreCrediticio,
-    estadoGeneral: history.estadoGeneral,
-  };
+  const data = selectScore(history);
   sendFormatted(req, res, data, 'scoreCrediticio');
 }
 
 export async function debtController(req, res) {
   const history = await getCreditHistory(req.params.identificacion, getQueryContext(req, 'endeudamiento'));
-  const data = {
-    identificacion: history.identificacion,
-    prestamosActivos: history.prestamosActivos,
-    tarjetasCredito: history.tarjetasCredito,
-    porcentajeEndeudamiento: history.porcentajeEndeudamiento,
-    nivelEndeudamiento: history.nivelEndeudamiento,
-    poseeMoraActual: history.poseeMoraActual,
-  };
+  const data = selectDebt(history);
   sendFormatted(req, res, data, 'endeudamiento');
 }

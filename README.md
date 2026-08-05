@@ -1,6 +1,6 @@
 # Sistema Nacional de Informacion Crediticia
 
-Proyecto universitario que simula un servicio centralizado para consultar el historial crediticio de ciudadanos. La API esta construida con Node.js, Express y PostgreSQL.
+Proyecto universitario que simula un servicio centralizado para consultar el historial crediticio de ciudadanos. Los servicios REST y SOAP estan construidos con Node.js, Express y PostgreSQL.
 
 ## Funcionalidades
 
@@ -10,6 +10,7 @@ Proyecto universitario que simula un servicio centralizado para consultar el his
 - Consulta separada del score y del endeudamiento.
 - Respuestas en JSON y XML.
 - Documentacion interactiva con Swagger/OpenAPI.
+- Servicio SOAP con contrato WSDL y tres operaciones crediticias.
 - Registro de las consultas realizadas por cada institucion.
 - Auditoria de creacion de API tokens por usuario institucional.
 - Base de datos PostgreSQL con datos de demostracion.
@@ -50,6 +51,8 @@ Servicios disponibles:
 
 - API: `http://localhost:3000`
 - Swagger: `http://localhost:3000/api-docs`
+- SOAP: `http://localhost:3000/soap/creditos`
+- WSDL: `http://localhost:3000/soap/creditos?wsdl`
 - PostgreSQL: `localhost:5432`
 
 Para detener el sistema:
@@ -156,3 +159,13 @@ Tambien se puede solicitar XML con el encabezado `Accept: application/xml`.
 ```bash
 npm test
 ```
+
+## Servicio SOAP
+
+El servicio publica `ConsultarHistorial`, `ConsultarScore` y `ConsultarEndeudamiento`. El cliente de demostracion obtiene automaticamente un API token y muestra los mensajes XML intercambiados:
+
+```bash
+npm run soap:client -- ConsultarHistorial 001-1234567-8
+```
+
+La guia completa para ejecutar el servicio, tomar las siete capturas y redactar la comparacion se encuentra en [`docs/INFORME-SOAP.md`](docs/INFORME-SOAP.md).
